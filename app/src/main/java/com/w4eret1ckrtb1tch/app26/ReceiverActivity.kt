@@ -1,5 +1,6 @@
 package com.w4eret1ckrtb1tch.app26
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -8,6 +9,12 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.w4eret1ckrtb1tch.app26.data.Employee
 
 class ReceiverActivity : AppCompatActivity() {
+
+    lateinit var surName: TextView
+    lateinit var name: TextView
+    lateinit var fullName: TextView
+    lateinit var toolBar: MaterialToolbar
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_receiver)
@@ -16,10 +23,10 @@ class ReceiverActivity : AppCompatActivity() {
         val bundle = intent.getBundleExtra(MainActivity.BUNDLE)
         val employee: Employee? = bundle?.getParcelable(MainActivity.EMPLOYEE)
 
-        val surName: TextView = findViewById(R.id.surname)
-        val name: TextView = findViewById(R.id.name)
-        val fullName: TextView = findViewById(R.id.full_name)
-        val toolBar: MaterialToolbar = findViewById(R.id.toolbar_activity2)
+        surName = findViewById(R.id.surname)
+        name = findViewById(R.id.name)
+        fullName = findViewById(R.id.full_name)
+        toolBar = findViewById(R.id.toolbar_activity2)
 
         employee?.let {
             surName.text = employee.surName
@@ -48,7 +55,23 @@ class ReceiverActivity : AppCompatActivity() {
         alertDialogBuilder
             .setTitle("Назад...")
             .setMessage("Вы хотите перейти назад?")
-            .setPositiveButton("да") { _, _ -> finish() }
+            .setPositiveButton("да") { _, _ ->
+                val bundle = Bundle()
+                bundle.putParcelable(
+                    MainActivity.EMPLOYEE,
+                    Employee(
+                        surName.text.toString(),
+                        name.text.toString(),
+                        fullName.text.toString()
+                    )
+                )
+
+                val intent = Intent().apply {
+                    putExtra(MainActivity.RESULT_RECEIVER_ACTIVITY, bundle)
+                }
+                setResult(RESULT_OK, intent)
+                finish()
+            }
             .setNegativeButton("нет") { dialog, _ -> dialog.cancel() }
 
         val alertDialog = alertDialogBuilder.create()
@@ -56,5 +79,6 @@ class ReceiverActivity : AppCompatActivity() {
         alertDialog.show()
 
     }
+
 
 }

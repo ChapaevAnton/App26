@@ -17,7 +17,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ReceiverActivity" />
+        <activity android:name=".ReceiverActivity"
+            android:launchMode="standard">
+            <intent-filter>
+                <action android:name="com.app26.activity.receiver" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
     </application>
 
