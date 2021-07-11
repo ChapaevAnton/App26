@@ -1,5 +1,6 @@
 package com.w4eret1ckrtb1tch.app26
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.w4eret1ckrtb1tch.app26.data.Employee
 
@@ -35,6 +37,21 @@ class MainActivity : AppCompatActivity() {
         val onIntentButton: Button = findViewById(R.id.on_button_intent)
         textResult = findViewById(R.id.text_result)
 
+        activityResultLauncher =
+            registerForActivityResult(
+                ActivityResultContracts.StartActivityForResult()
+            ) { result ->
+                if (result?.resultCode == Activity.RESULT_OK) {
+                    val data: Intent? = result.data
+                    val bundle = data?.getBundleExtra(RESULT_RECEIVER_ACTIVITY)
+                    val employee: Employee? = bundle?.getParcelable(EMPLOYEE)
+
+                    val string = "${employee?.surName} ${employee?.name} ${employee?.fullName}"
+                    Log.d("TEST", "ActivityResultLauncher: $string")
+                    textResult.text = string
+                }
+            }
+
         onSendButton.setOnClickListener {
             val employee = Employee(
                 surName.text.toString(),
@@ -48,9 +65,9 @@ class MainActivity : AppCompatActivity() {
             val intentExplicit = Intent(this, ReceiverActivity::class.java).apply {
                 putExtra(BUNDLE, bundle)
             }
-
-            startActivityForResult(intentExplicit, REQUEST_CODE)
-            //activityResultLauncher.launch(intentExplicit)
+            //Deprecated
+            //startActivityForResult(intentExplicit, REQUEST_CODE)
+            activityResultLauncher.launch(intentExplicit)
 
         }
 
@@ -76,19 +93,20 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        Log.d("TEST", "onActivityResult: $requestCode $resultCode $data")
-        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-
-            val bundle = data?.getBundleExtra(RESULT_RECEIVER_ACTIVITY)
-            val employee:Employee? = bundle?.getParcelable(EMPLOYEE)
-
-            val string = "${employee?.surName} ${employee?.name} ${employee?.fullName}"
-            Log.d("TEST", "onActivityResult: $string")
-            textResult.text = string
-        }
-
-    }
+//Deprecated
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        Log.d("TEST", "onActivityResult: $requestCode $resultCode $data")
+//        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+//
+//            val bundle = data?.getBundleExtra(RESULT_RECEIVER_ACTIVITY)
+//            val employee: Employee? = bundle?.getParcelable(EMPLOYEE)
+//
+//            val string = "${employee?.surName} ${employee?.name} ${employee?.fullName}"
+//            Log.d("TEST", "onActivityResult: $string")
+//            textResult.text = string
+//        }
+//
+//    }
 
 }

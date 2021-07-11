@@ -56,20 +56,7 @@ class ReceiverActivity : AppCompatActivity() {
             .setTitle("Назад...")
             .setMessage("Вы хотите перейти назад?")
             .setPositiveButton("да") { _, _ ->
-                val bundle = Bundle()
-                bundle.putParcelable(
-                    MainActivity.EMPLOYEE,
-                    Employee(
-                        surName.text.toString(),
-                        name.text.toString(),
-                        fullName.text.toString()
-                    )
-                )
-
-                val intent = Intent().apply {
-                    putExtra(MainActivity.RESULT_RECEIVER_ACTIVITY, bundle)
-                }
-                setResult(RESULT_OK, intent)
+                setReturnActivityResult()
                 finish()
             }
             .setNegativeButton("нет") { dialog, _ -> dialog.cancel() }
@@ -80,5 +67,22 @@ class ReceiverActivity : AppCompatActivity() {
 
     }
 
+    private fun setReturnActivityResult() {
+        val bundle = Bundle()
+
+        bundle.putParcelable(
+            MainActivity.EMPLOYEE,
+            Employee(
+                surName.text.toString(),
+                name.text.toString(),
+                fullName.text.toString()
+            )
+        )
+
+        val intent = Intent().apply {
+            putExtra(MainActivity.RESULT_RECEIVER_ACTIVITY, bundle)
+        }
+        setResult(RESULT_OK, intent)
+    }
 
 }
