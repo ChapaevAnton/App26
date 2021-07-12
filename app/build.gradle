@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-parcelize'
+    // need safe args
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -24,10 +26,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    // need safe args
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    // need safe args
     kotlinOptions {
         jvmTarget = '1.8'
     }
@@ -44,7 +48,9 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
-     //navigation
+    //navigation and safe args
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation "androidx.navigation:navigation-ui-ktx:2.3.5"
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:2.3.5"
+
 }

@@ -26,10 +26,7 @@
             app:destination="@id/threeFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right" />
-        <argument
-            android:name="EMPLOYEE_TWO"
-            app:argType="com.w4eret1ckrtb1tch.app26.data.Employee" />
-    </fragment>
+          </fragment>
     <fragment
         android:id="@+id/threeFragment"
         android:name="com.w4eret1ckrtb1tch.app26.ThreeFragment"
@@ -42,5 +39,11 @@
             app:popExitAnim="@android:anim/slide_out_right"
             app:popUpTo="@id/oneFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="employee1"
+            app:argType="com.w4eret1ckrtb1tch.app26.data.Employee" />
+        <argument
+            android:name="employee2"
+            app:argType="com.w4eret1ckrtb1tch.app26.data.Employee" />
     </fragment>
 </navigation>

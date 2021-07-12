@@ -7,8 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 
 class ThreeFragment : Fragment() {
+
+    private val args: ThreeFragmentArgs by navArgs()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val employee1 = args.employee1
+        val employee2 = args.employee2
+        Log.d("TAG", "employee1: $employee1")
+        Log.d("TAG", "employee2: $employee2")
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -18,6 +30,8 @@ class ThreeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_three, container, false)
 
     }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
